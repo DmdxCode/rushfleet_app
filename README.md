@@ -1,4 +1,4 @@
-# spatch_flutter
+# rushfleet_app
 
 A new Flutter project.
 
