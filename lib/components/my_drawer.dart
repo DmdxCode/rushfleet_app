@@ -1,15 +1,18 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:spatch_flutter/components/drawer_list_tile.dart';
-import 'package:spatch_flutter/components/spatch_logo.dart';
+import 'package:spatch_flutter/components/footer_rushfleet_logo.dart';
+import 'package:spatch_flutter/pages/account_page.dart';
+import 'package:spatch_flutter/pages/history_page.dart';
 import 'package:spatch_flutter/pages/intro_page.dart';
 import 'package:spatch_flutter/pages/request_page.dart';
+import 'package:spatch_flutter/pages/wallet_page.dart';
+import 'package:intl/intl.dart';
 
 class MyDrawer extends StatefulWidget {
-  MyDrawer({super.key});
+  const MyDrawer({super.key});
 
   @override
   State<MyDrawer> createState() => _MyDrawerState();
@@ -17,9 +20,19 @@ class MyDrawer extends StatefulWidget {
 
 class _MyDrawerState extends State<MyDrawer> {
   String? username;
+  int balance = 0;
 
-  void signOut() {
+  void signOut() async {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+      },
+    );
     FirebaseAuth.instance.signOut();
+
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
@@ -33,6 +46,34 @@ class _MyDrawerState extends State<MyDrawer> {
     super.initState();
     if (username == null) {
       getUsername();
+      loadWalletBalance();
+    }
+  }
+
+  Future<void> loadWalletBalance() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user == null) return;
+
+    try {
+      DocumentSnapshot userDoc = await FirebaseFirestore.instance
+          .collection('user')
+          .doc(user.uid)
+          .get();
+
+      if (userDoc.exists) {
+        final rawBalance = userDoc['wallet_balance'] ?? 0;
+        final int parsedBalance = rawBalance is int
+            ? rawBalance
+            : (rawBalance is double ? rawBalance.toInt() : 0);
+
+        if (mounted) {
+          setState(() {
+            balance = parsedBalance;
+          });
+        }
+      }
+    } catch (e) {
+      debugPrint("Error loading wallet balance: $e");
     }
   }
 
@@ -46,7 +87,7 @@ class _MyDrawerState extends State<MyDrawer> {
 
       if (userDoc.exists) {
         setState(() {
-          username = userDoc['name'];
+          username = "${userDoc['first_name']} ${userDoc['last_name']}";
         });
       }
     }
@@ -55,7 +96,7 @@ class _MyDrawerState extends State<MyDrawer> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      backgroundColor: Colors.grey[300],
+      backgroundColor: Colors.white,
       child: SingleChildScrollView(
         child: Column(
           children: [
@@ -63,7 +104,7 @@ class _MyDrawerState extends State<MyDrawer> {
               height: 250,
               width: 400,
               decoration: BoxDecoration(
-                color: Color(0xFF7000F6),
+                color: Color(0xFF12AA6C),
               ),
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -71,6 +112,19 @@ class _MyDrawerState extends State<MyDrawer> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    SizedBox(
+                      height: 50,
+                    ),
+                    Text(
+                      "Hi, 👋",
+                      style: TextStyle(
+                          fontSize: 23,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
                     Text(
                       username ?? "",
                       style: TextStyle(
@@ -83,12 +137,20 @@ class _MyDrawerState extends State<MyDrawer> {
                     SizedBox(
                       height: 20,
                     ),
-                    Text(
-                      "View Profile",
-                      style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => AccountPage()));
+                      },
+                      child: Text(
+                        "View Profile",
+                        style: TextStyle(
+                            fontSize: 10,
+                            fontWeight: FontWeight.w400,
+                            color: Colors.white),
+                      ),
                     )
                   ],
                 ),
@@ -98,7 +160,7 @@ class _MyDrawerState extends State<MyDrawer> {
               height: 100,
               width: 400,
               decoration: BoxDecoration(
-                color: Color(0xFF6001D2),
+                color: Color(0xFF061F16),
               ),
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -110,27 +172,34 @@ class _MyDrawerState extends State<MyDrawer> {
                       "Wallet Balance",
                       style: TextStyle(
                           color: Colors.white,
-                          fontSize: 15,
-                          fontWeight: FontWeight.w600),
+                          fontSize: 14.5,
+                          fontWeight: FontWeight.w500),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "N12,000",
+                          "NGN ${NumberFormat("#,##0").format(balance)}",
                           style: TextStyle(
                             color: Colors.white,
-                            fontSize: 35,
+                            fontSize: 25,
                             fontWeight: FontWeight.w800,
-                            letterSpacing: 0,
                           ),
                         ),
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(25),
-                          child: SvgPicture.asset(
-                            "lib/svg/add2.svg",
-                            colorFilter: ColorFilter.mode(
-                                Color(0XFFFFB947), BlendMode.color),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => WalletPage()));
+                          },
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(25),
+                            child: SvgPicture.asset(
+                              "lib/svg/add2.svg",
+                              colorFilter: ColorFilter.mode(
+                                  Color(0XFFFFB947), BlendMode.color),
+                            ),
                           ),
                         )
                       ],
@@ -140,10 +209,10 @@ class _MyDrawerState extends State<MyDrawer> {
               ),
             ),
             SizedBox(
-              height: 50,
+              height: 20,
             ),
             DrawerListTile(
-              icon: "lib/images/send.png",
+              icon: "lib/images/result.png",
               text: "Request",
               onTap: () {
                 Navigator.pushReplacement(
@@ -155,25 +224,52 @@ class _MyDrawerState extends State<MyDrawer> {
               },
             ),
             DrawerListTile(
-              icon: "lib/images/wallet_icons.png",
+              icon: "lib/images/wallet.png",
               text: "Wallet",
-              onTap: () {},
+              onTap: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => WalletPage(),
+                  ),
+                );
+              },
             ),
             DrawerListTile(
-              icon: "lib/images/box.png",
+              icon: "lib/images/history.png",
               text: "History",
-              onTap: () {},
+              onTap: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => HistoryPage()),
+                );
+              },
             ),
-            DrawerListTile(
-              icon: "lib/images/user.png",
-              text: "Account",
-              onTap: () {},
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: ListTile(
+                  leading: Image.asset(
+                    "lib/images/user.png",
+                    height: 20,
+                    width: 20,
+                  ),
+                  onTap: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => AccountPage()),
+                    );
+                  },
+                  title: Text("Account",
+                      style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.black))),
             ),
             SizedBox(
-              height: 50,
+              height: 20,
             ),
             Container(
-              margin: EdgeInsets.symmetric(horizontal: 15),
+              margin: EdgeInsets.symmetric(horizontal: 10),
               decoration: BoxDecoration(
                 border: Border(
                   top: BorderSide(
@@ -188,32 +284,38 @@ class _MyDrawerState extends State<MyDrawer> {
               ),
               child: ListTile(
                 onTap: signOut,
-                leading: Icon(Icons.logout),
+                leading: Icon(
+                  size: 20,
+                  color: Colors.black,
+                  Icons.logout,
+                ),
                 title: Text("Logout",
                     style: TextStyle(
-                        color: Colors.grey.shade700,
-                        fontSize: 18,
+                        color: Colors.black,
+                        fontSize: 14,
                         fontWeight: FontWeight.w700)),
               ),
             ),
             Container(
-              margin: EdgeInsets.symmetric(horizontal: 15),
+              margin: EdgeInsets.symmetric(horizontal: 8),
               decoration: BoxDecoration(
                 border: Border(
                   // Adjust border thickness & color
                   bottom: BorderSide(
-                    width: 1,
                     color: Colors.grey.shade400,
                   ),
                 ),
               ),
               child: ListTile(
-                onTap: signOut,
-                leading: Image.asset("lib/images/contact.png"),
+                leading: Icon(
+                  size: 20,
+                  Icons.info_outline,
+                  color: Colors.black,
+                ),
                 title: Text("Contact",
                     style: TextStyle(
-                        color: Colors.grey.shade700,
-                        fontSize: 18,
+                        color: Colors.black,
+                        fontSize: 14,
                         fontWeight: FontWeight.w700)),
               ),
             ),
@@ -224,7 +326,7 @@ class _MyDrawerState extends State<MyDrawer> {
               padding: const EdgeInsets.symmetric(horizontal: 30),
               child: Row(
                 children: [
-                  SpatchLogo(),
+                  FooterRushfleetLogo(),
                 ],
               ),
             )

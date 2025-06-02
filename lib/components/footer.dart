@@ -9,9 +9,7 @@ class Footer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-        color: Color(0xfff2f2f2),
-      ),
+      decoration: BoxDecoration(color: Color(0xFF061F16)),
       child: Column(
         children: [
           ContactCard(),
@@ -29,7 +27,7 @@ class Footer extends StatelessWidget {
                   textAlign: TextAlign.left,
                   style: TextStyle(
                     fontSize: 15,
-                    color: Colors.grey.shade700,
+                    color: Color(0XFFD4E9E2),
                   ),
                 ),
                 SizedBox(

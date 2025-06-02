@@ -22,7 +22,7 @@ class ContactCard extends StatelessWidget {
               height: 25,
             ),
             Text(
-              "Manage your deliveries with spatch easily.",
+              "Manage your deliveries with rushfleet easily.",
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Colors.white,
@@ -36,7 +36,7 @@ class ContactCard extends StatelessWidget {
             Text(
               "Time is the most precious thing you have when runnung your business. You can off the time to ponder on logistics.",
               textAlign: TextAlign.center,
-              style: TextStyle(color: Colors.white, fontSize: 9),
+              style: TextStyle(color: Colors.white, fontSize: 10),
             ),
             SizedBox(
               height: 25,
@@ -46,7 +46,7 @@ class ContactCard extends StatelessWidget {
               margin: EdgeInsets.symmetric(horizontal: 28),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(7),
-                color: Color(0xFF7000F6),
+                color: Color(0xFF12AA6C),
               ),
               child: Center(
                 child: Text(

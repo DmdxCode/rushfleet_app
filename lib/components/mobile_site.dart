@@ -24,7 +24,9 @@ class Mobilesite extends StatelessWidget {
                       Text(
                         "Company",
                         style: TextStyle(
-                            fontWeight: FontWeight.w700, fontSize: 18),
+                            color: Color(0XFFD4E9E2),
+                            fontWeight: FontWeight.w700,
+                            fontSize: 18),
                       ),
                       SizedBox(
                         height: 15,
@@ -32,7 +34,7 @@ class Mobilesite extends StatelessWidget {
                       Text(
                         "Company",
                         style: TextStyle(
-                          color: Colors.grey.shade700,
+                          color: Color(0XFFD4E9E2),
                         ),
                         textAlign: TextAlign.left,
                       ),
@@ -42,7 +44,7 @@ class Mobilesite extends StatelessWidget {
                       Text(
                         "Blog",
                         style: TextStyle(
-                          color: Colors.grey.shade700,
+                          color: Color(0XFFD4E9E2),
                         ),
                         textAlign: TextAlign.left,
                       ),
@@ -52,7 +54,7 @@ class Mobilesite extends StatelessWidget {
                       Text(
                         "Career",
                         style: TextStyle(
-                          color: Colors.grey.shade700,
+                          color: Color(0XFFD4E9E2),
                         ),
                         textAlign: TextAlign.left,
                       ),
@@ -62,7 +64,7 @@ class Mobilesite extends StatelessWidget {
                       Text(
                         "About",
                         style: TextStyle(
-                          color: Colors.grey.shade700,
+                          color: Color(0XFFD4E9E2),
                         ),
                         textAlign: TextAlign.start,
                       ),
@@ -77,7 +79,9 @@ class Mobilesite extends StatelessWidget {
                       Text(
                         "Service",
                         style: TextStyle(
-                            fontWeight: FontWeight.w700, fontSize: 18),
+                            color: Color(0XFFD4E9E2),
+                            fontWeight: FontWeight.w700,
+                            fontSize: 18),
                       ),
                       SizedBox(
                         height: 15,
@@ -85,7 +89,7 @@ class Mobilesite extends StatelessWidget {
                       Text(
                         "Same Day",
                         style: TextStyle(
-                          color: Colors.grey.shade700,
+                          color: Color(0XFFD4E9E2),
                         ),
                         textAlign: TextAlign.left,
                       ),
@@ -95,7 +99,7 @@ class Mobilesite extends StatelessWidget {
                       Text(
                         "International",
                         style: TextStyle(
-                          color: Colors.grey.shade700,
+                          color: Color(0XFFD4E9E2),
                         ),
                         textAlign: TextAlign.left,
                       ),
@@ -105,7 +109,7 @@ class Mobilesite extends StatelessWidget {
                       Text(
                         "Express",
                         style: TextStyle(
-                          color: Colors.grey.shade700,
+                          color: Color(0XFFD4E9E2),
                         ),
                         textAlign: TextAlign.left,
                       ),
@@ -115,7 +119,7 @@ class Mobilesite extends StatelessWidget {
                       Text(
                         "Buck Service",
                         style: TextStyle(
-                          color: Colors.grey.shade700,
+                          color: Color(0XFFD4E9E2),
                         ),
                         textAlign: TextAlign.start,
                       ),
@@ -136,28 +140,26 @@ class Mobilesite extends StatelessWidget {
               Column(
                 children: [
                   AppButton(
-                    onTap: () {
-                      
-                    },
+                    iconcolor: Colors.white,
+                    onTap: () {},
                     imagePath: "lib/images/ apple.png",
                     minitext: "Available on",
                     minitextcolor: Colors.white,
                     text: "App Store",
-                    color: Color(0xFF7000F6),
+                    color: Color(0xFF12AA6C),
                     fontcolor: Colors.white,
                   ),
                   SizedBox(
                     height: 5,
                   ),
                   AppButton(
-                    onTap: () {
-                      
-                    },
+                    iconcolor: Color(0xFF12AA6C),
+                    onTap: () {},
                     imagePath: "lib/images/ google.png",
                     minitext: "Get in on",
-                    minitextcolor: Colors.grey.shade700,
+                    minitextcolor: Colors.black,
                     text: "Google Play",
-                    color: Colors.white,
+                    color: Color(0XFFD4E9E2),
                     fontcolor: Colors.black,
                   ),
                   SizedBox(
@@ -170,7 +172,7 @@ class Mobilesite extends StatelessWidget {
                         "Connect with us on social",
                         style: TextStyle(
                           fontWeight: FontWeight.w700,
-                          color: Colors.grey.shade700,
+                          color: Color(0XFFD4E9E2),
                         ),
                       ),
                       SizedBox(

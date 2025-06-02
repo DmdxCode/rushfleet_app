@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spatch_flutter/components/footer.dart';
 import 'package:spatch_flutter/components/my_buttons.dart';
+import 'package:spatch_flutter/components/spatch_logo.dart';
 import 'package:spatch_flutter/pages/login_page.dart';
 import 'package:spatch_flutter/pages/register_page.dart';
 
@@ -10,7 +11,7 @@ class IntroPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFFFFFFF),
+      backgroundColor: Color(0xFF061F16),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(0),
@@ -20,21 +21,17 @@ class IntroPage extends StatelessWidget {
                 Row(
                   children: [
                     Padding(padding: EdgeInsets.symmetric(horizontal: 10)),
-                    Text(
-                      "spatch",
-                      style: TextStyle(
-                          color: Color(0xFF7000F6),
-                          fontWeight: FontWeight.w800,
-                          fontSize: 25,
-                          fontFamily: 'MazzardH-SemiBoldItalic.ttf'),
+                    SizedBox(
+                      height: 20,
                     ),
-                    Image.asset(
-                      "lib/images/Vector.png",
+                    SpatchLogo(),
+                    const SizedBox(
+                      height: 80,
                     ),
                   ],
                 ),
                 SizedBox(
-                  height: 70,
+                  height: 30,
                 ),
                 Container(
                   margin: EdgeInsetsDirectional.all(35),
@@ -46,6 +43,7 @@ class IntroPage extends StatelessWidget {
                           Text(
                             "Glad you made it here.",
                             style: TextStyle(
+                              color: Colors.white,
                               fontSize: 25,
                               fontWeight: FontWeight.w800,
                             ),
@@ -59,15 +57,15 @@ class IntroPage extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Text("Need to deliver your merchandise?",
-                              style: TextStyle(color: Colors.grey[600])),
+                              style: TextStyle(color: Colors.white)),
                         ],
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Text(
-                            "Let Spatch take care of that",
-                            style: TextStyle(color: Colors.grey[600]),
+                            "Let RushFleet take care of that",
+                            style: TextStyle(color: Colors.white),
                           ),
                         ],
                       ),
@@ -83,8 +81,8 @@ class IntroPage extends StatelessWidget {
                             ),
                           );
                         },
-                        text: "Register with Spatch",
-                        color: Color(0xFF7000F6),
+                        text: "Register with RushFleet",
+                        color: Color(0xFF12AA6C),
                         fontcolor: Colors.white,
                         border: Border(),
                       ),
@@ -100,12 +98,10 @@ class IntroPage extends StatelessWidget {
                             ),
                           );
                         },
-                        text: "Login to Spatch",
-                        color: Colors.white,
-                        fontcolor: Colors.grey.shade600,
-                        border: Border.all(
-                          color: Colors.grey.shade600,
-                        ),
+                        text: "Login to RushFleet",
+                        color: Color(0xFF1D362B),
+                        fontcolor: Colors.white,
+                        border: Border(),
                       )
                     ],
                   ),

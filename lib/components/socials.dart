@@ -13,6 +13,7 @@ class MySocials extends StatelessWidget {
       decoration: BoxDecoration(
           color: Colors.white, borderRadius: BorderRadius.circular(10)),
       child: Image.asset(
+        color: Color(0xFF12AA6C),
         iconPath,
       ),
     );

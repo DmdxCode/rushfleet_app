@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:spatch_flutter/components/booking_button.dart';
 import 'package:spatch_flutter/components/booking_container_textfield.dart';
-import 'package:spatch_flutter/components/booking_textfield.dart';
+import 'package:spatch_flutter/components/guest_booking.dart';
+import 'package:spatch_flutter/components/receiver_booking_container.dart';
 
 class SameDay extends StatefulWidget {
   const SameDay({super.key});
@@ -11,6 +12,7 @@ class SameDay extends StatefulWidget {
 }
 
 class _SameDayState extends State<SameDay> {
+  String _selectedContainer = "sender"; // No container shown initially
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -18,7 +20,7 @@ class _SameDayState extends State<SameDay> {
         color: Colors.white,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1), // Shadow color
+            color: Colors.black.withValues(alpha: 0.1),
             blurRadius: 25, // Softness of the shadow
             spreadRadius: 1, // How far the shadow spreads
             offset: Offset(3, 3), // X and Y offset
@@ -29,7 +31,6 @@ class _SameDayState extends State<SameDay> {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 30),
         child: Column(
-          mainAxisSize: MainAxisSize.min,
           children: [
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -57,23 +58,60 @@ class _SameDayState extends State<SameDay> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 BookingButton(
-                  imagePath: "lib/images/sender.png",
+                  color: Color(0xFF12AA6C),
+                  imagePath: "lib/images/userrf.png",
                   text: "I'm the sender",
+                  border: _selectedContainer == "sender"
+                      ? Border.all(color: Color(0xFF12AA6C), width: 0.4)
+                      : Border(),
+                  onTap: () {
+                    setState(() {
+                      _selectedContainer = "sender"; // Show sender container
+                    });
+                  },
                 ),
                 BookingButton(
-                  imagePath: "lib/images/receiver.png",
+                  color: Color(0xffFF9E00),
+                  imagePath: "lib/images/userrf.png",
                   text: "I'm the receiver",
+                  border: _selectedContainer == "receiver"
+                      ? Border.all(color: Color(0xFF12AA6C), width: 0.4)
+                      : Border(),
+                  onTap: () {
+                    setState(() {
+                      _selectedContainer =
+                          "receiver"; // Show receiver container
+                    });
+                  },
                 ),
                 BookingButton(
-                  imagePath: "lib/images/guest.png",
+                  color: Color(0xFF12AA6C),
+                  imagePath: "lib/images//userrf.png",
                   text: "Book for guest",
-                ),
+                  border: _selectedContainer == "guest"
+                      ? Border.all(color: Color(0xFF12AA6C), width: 0.4)
+                      : Border(),
+                  onTap: () {
+                    setState(() {
+                      _selectedContainer = "guest"; // Show receiver container
+                    });
+                  },
+                )
               ],
             ),
             SizedBox(
               height: 30,
             ),
-            BookingContainerTextfield()
+            if (_selectedContainer == "sender")
+              BookingContainerTextfield()
+            else if (_selectedContainer == "receiver")
+              ReceiverBookingContainer(
+                
+              )
+            else if (_selectedContainer == "guest")
+              GuestBooking(
+                
+              )
           ],
         ),
       ),

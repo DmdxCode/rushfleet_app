@@ -1,20 +1,22 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_paystack/flutter_paystack.dart';
 import 'package:spatch_flutter/pages/auth_page.dart';
-import 'package:spatch_flutter/pages/intro_page.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
+final plugin = PaystackPlugin();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load(fileName: ".env");
   await Firebase.initializeApp();
-  WidgetsFlutterBinding.ensureInitialized();
 
-  // Set status bar color to black and icon brightness to light
-  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-    statusBarColor: Colors.black, // Background color of the status bar
-    statusBarIconBrightness: Brightness.light, // White icons
-  ));
-  runApp(MyApp());
+  plugin.initialize(publicKey: dotenv.env['PAYSTACK_TEST_KEY']!);
+
+  runApp(
+    const MyApp(),
+  );
 }
 
 class MyApp extends StatelessWidget {

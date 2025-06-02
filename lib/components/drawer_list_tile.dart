@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 class DrawerListTile extends StatelessWidget {
   final String icon;
   final String text;
-  void Function()? onTap;
+  final void Function()? onTap;
 
-  DrawerListTile({
+  const DrawerListTile({
     super.key,
     required this.icon,
     required this.text,
@@ -14,22 +14,19 @@ class DrawerListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
-      child: ListTile(
-        leading: Image.asset(
-          icon,
-          height: 25,
-        ),
-        title: Text(
-          text,
-          style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w700,
-              color: Colors.grey.shade700),
-        ),
-        onTap: onTap,
+    return ListTile(
+      leading: Image.asset(
+        color: Colors.black,
+        icon,
+        height: 20,
+        width: 35,
       ),
+      title: Text(
+        text,
+        style: TextStyle(
+            fontSize: 15, fontWeight: FontWeight.w700, color: Colors.black),
+      ),
+      onTap: onTap,
     );
   }
 }

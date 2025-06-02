@@ -3,6 +3,7 @@
 import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
 import 'package:flutter/foundation.dart'
     show defaultTargetPlatform, kIsWeb, TargetPlatform;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 /// Default [FirebaseOptions] for use with your Firebase apps.
 ///
@@ -40,8 +41,8 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyAIEobu4r57l-lbRm7YqrjgcSRRfYZeWKg',
+  static FirebaseOptions web = FirebaseOptions(
+    apiKey: dotenv.env['WEB_KEY']!,
     appId: '1:473175772830:web:4b3432f84f4a41a07fb58f',
     messagingSenderId: '473175772830',
     projectId: 'spatch1-f97ce',
@@ -49,16 +50,16 @@ class DefaultFirebaseOptions {
     storageBucket: 'spatch1-f97ce.firebasestorage.app',
   );
 
-  static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBnhHpfe4-SDihX2JX7ajB4H1ghrDjKq-w',
+  static FirebaseOptions android = FirebaseOptions(
+    apiKey: dotenv.env['ANDROID_KEY']!,
     appId: '1:473175772830:android:dea26e431a2e7a447fb58f',
     messagingSenderId: '473175772830',
     projectId: 'spatch1-f97ce',
     storageBucket: 'spatch1-f97ce.firebasestorage.app',
   );
 
-  static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyD-Z_GLmqqkodIb-J1z-ojlrzyjLp7Dm3Q',
+  static FirebaseOptions ios = FirebaseOptions(
+    apiKey: dotenv.env['IOS_KEY']!,
     appId: '1:473175772830:ios:e4acb9d7eedc50a87fb58f',
     messagingSenderId: '473175772830',
     projectId: 'spatch1-f97ce',
@@ -66,8 +67,8 @@ class DefaultFirebaseOptions {
     iosBundleId: 'com.example.spatchFlutter',
   );
 
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyD-Z_GLmqqkodIb-J1z-ojlrzyjLp7Dm3Q',
+  static FirebaseOptions macos = FirebaseOptions(
+    apiKey: dotenv.env['MACOS_KEY']!,
     appId: '1:473175772830:ios:e4acb9d7eedc50a87fb58f',
     messagingSenderId: '473175772830',
     projectId: 'spatch1-f97ce',
@@ -75,8 +76,8 @@ class DefaultFirebaseOptions {
     iosBundleId: 'com.example.spatchFlutter',
   );
 
-  static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyAIEobu4r57l-lbRm7YqrjgcSRRfYZeWKg',
+  static FirebaseOptions windows = FirebaseOptions(
+    apiKey: dotenv.env['WINDOWS_KEY']!,
     appId: '1:473175772830:web:028d3eef862100e67fb58f',
     messagingSenderId: '473175772830',
     projectId: 'spatch1-f97ce',

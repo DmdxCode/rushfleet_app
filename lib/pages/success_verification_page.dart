@@ -8,8 +8,8 @@ class SuccessVerificationPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF7000F6),
-      body: Container(
+      backgroundColor: Color(0xFF061F16),
+      body: SizedBox(
         child: Center(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -27,15 +27,15 @@ class SuccessVerificationPage extends StatelessWidget {
                 Text(
                   "Successful",
                   style: TextStyle(
-                      color: Colors.white,
+                      color: Color(0xFF12AA6C),
                       fontWeight: FontWeight.w700,
                       fontSize: 21),
                 ),
                 Text(
-                  "Welcome to Spatch",
+                  "Welcome to RushFleet",
                   style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 14,
+                    color: Color(0xFF12AA6C),
+                    fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -44,11 +44,11 @@ class SuccessVerificationPage extends StatelessWidget {
                 ),
                 MyButtons(
                   text: "Continue",
-                  color: Color(0xFFF3F1FA),
-                  fontcolor: Color(0xFF7000F6),
+                  color: Color(0xFF12AA6C),
+                  fontcolor: Colors.white,
                   border: Border(),
                   onTap: () {
-                    Navigator.push(context,
+                    Navigator.pushReplacement(context,
                         MaterialPageRoute(builder: (context) => HomePage()));
                   },
                 ),

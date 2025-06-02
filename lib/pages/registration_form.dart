@@ -1,10 +1,16 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:intl_phone_field/country_picker_dialog.dart';
 import 'package:spatch_flutter/components/login_textfield.dart';
 import 'package:spatch_flutter/components/my_buttons.dart';
+import 'package:spatch_flutter/components/rushfleet_alert_dialog.dart';
 import 'package:spatch_flutter/components/spatch_logo.dart';
 import 'package:spatch_flutter/pages/success_verification_page.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
 
 class RegistrationForm extends StatefulWidget {
   final User user;
@@ -15,41 +21,58 @@ class RegistrationForm extends StatefulWidget {
 }
 
 class _RegistrationFormState extends State<RegistrationForm> {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _firstnameController = TextEditingController();
+  final TextEditingController _lastnameController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
   String? verificationId;
+  int balance = 0;
 
   Future<void> registerUser() async {
-    String name = _usernameController.text.trim();
+    String firstName = _firstnameController.text.trim();
+    String lastName = _lastnameController.text.trim();
     String phone = _phoneController.text.trim();
 
     showDialog(
         context: context,
         builder: (context) {
           return Center(
-            child: CircularProgressIndicator(),
+            child: CircularProgressIndicator(
+              color: Color(0xFF12AA6C),
+            ),
           );
         });
 
-    if (name.isEmpty || phone.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Please enter all details")),
+    if (firstName.isEmpty || lastName.isEmpty || phone.isEmpty) {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return RushFleetAlertDialog(
+            title: 'lib/images/delete.png',
+            message: "Please enter all details",
+            confirmText: 'Ok',
+            onConfirm: () {
+              Navigator.pop(context);
+            },
+          );
+        },
       );
+
       return;
     }
 
     try {
       await _firestore.collection("user").doc(widget.user.uid).set({
         "uid": widget.user.uid,
-        "name": name,
-        "phone": phone,
+        "first_name": _firstnameController.text,
+        "last_name": _lastnameController.text,
+        "phone": _phoneController.text,
         "email": widget.user.email,
+        "wallet_balance": balance,
         "createdAt": FieldValue.serverTimestamp(),
       });
 
-      await widget.user.updateDisplayName(name);
+      await widget.user.updateDisplayName(firstName);
       await widget.user.reload();
 
       Navigator.pushReplacement(
@@ -57,8 +80,19 @@ class _RegistrationFormState extends State<RegistrationForm> {
         MaterialPageRoute(builder: (context) => SuccessVerificationPage()),
       );
     } catch (e) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text("Error updating profile: $e")));
+      showDialog(
+        context: context,
+        builder: (context) {
+          return RushFleetAlertDialog(
+            title: 'lib/images/delete.png',
+            message: "Error updating profile: $e",
+            confirmText: 'Ok',
+            onConfirm: () {
+              Navigator.pop(context);
+            },
+          );
+        },
+      );
     }
   }
 
@@ -75,6 +109,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xFF061F16),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -87,56 +122,109 @@ class _RegistrationFormState extends State<RegistrationForm> {
                 children: [
                   Column(
                     children: [
+                      SizedBox(
+                        height: 20,
+                      ),
                       SpatchLogo(),
                       const SizedBox(
-                        height: 100,
+                        height: 80,
                       ),
                     ],
                   ),
                   Column(
                     children: [
-                      const SizedBox(height: 50),
                       const Text(
-                        "Register with Spatch.",
+                        "Register with RushFleet",
                         style: TextStyle(
-                            fontWeight: FontWeight.w800, fontSize: 25),
+                            color: Colors.white,
+                            fontWeight: FontWeight.w800,
+                            fontSize: 25),
                       ),
                       const SizedBox(height: 10),
                       Text.rich(
                         TextSpan(
                           text: "Continue creating account with ",
-                          style:
-                              TextStyle(fontSize: 13, color: Colors.grey[700]),
+                          style: TextStyle(fontSize: 13, color: Colors.white),
                           children: [
                             TextSpan(
                               text: user?.email ?? "No email available",
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.grey[900]),
+                                  color: Colors.white),
                             ),
                           ],
                         ),
                       ),
                       const SizedBox(height: 30),
                       LoginTextfield(
-                        controller: _usernameController,
+                        controller: _firstnameController,
                         icon: Icons.person,
-                        hintText: "Full Name",
-                        obscureText: false,
-                        keyboardType: TextInputType.name,
+                        hintText: "First Name",
+                        keyboardType: TextInputType.text,
                       ),
                       const SizedBox(height: 20),
                       LoginTextfield(
+                        controller: _lastnameController,
+                        icon: Icons.person,
+                        hintText: "Last Name",
+                        keyboardType: TextInputType.text,
+                      ),
+                      const SizedBox(height: 20),
+                      IntlPhoneField(
+                        cursorColor: Colors.white,
+                        textInputAction: TextInputAction.done,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly,
+                        ],
+                        keyboardType: TextInputType.number,
+                        cursorHeight: 15,
+                        flagsButtonPadding: EdgeInsets.symmetric(vertical: 0.5),
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 15,
+                        ),
+
+                        dropdownTextStyle:
+                            TextStyle(color: Colors.white, fontSize: 15),
+                        pickerDialogStyle: PickerDialogStyle(
+                            listTileDivider: SizedBox(),
+                            backgroundColor: Color(0xffD4E9E2)),
                         controller: _phoneController,
-                        icon: Icons.phone,
-                        hintText: "Phone Number",
-                        obscureText: false,
-                        keyboardType: TextInputType.phone,
+
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.only(top: 12),
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Color(0xFF12AA6C),
+                                width: 0.5), // Normal bottom border
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Color(0xFF12AA6C),
+                                width:
+                                    0.5), // Highlighted bottom border when focused
+                          ),
+                          errorBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Color(0xFF12AA6C),
+                                width:
+                                    0.5), // Bottom border when there's an error
+                          ),
+                        ),
+                        initialCountryCode:
+                            'NG', // Set the default country (Qatar)
+                        onChanged: (phone) {
+                          // print(
+                          //     'Phone Number: ${phone.completeNumber}'); // Full number with country code
+                        },
+                        onCountryChanged: (country) {
+                          // print('Country changed to: ${country.name}');
+                        },
                       ),
                       const SizedBox(height: 40),
                       MyButtons(
                         text: "Continue",
-                        color: const Color(0xFF7000F6),
+                        color: const Color(0xFF12AA6C),
                         fontcolor: Colors.white,
                         border: Border(),
                         onTap: registerUser,

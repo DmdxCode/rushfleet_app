@@ -6,6 +6,7 @@ class AppButton extends StatelessWidget {
   final Color fontcolor;
   final String minitext;
   final Color minitextcolor;
+  final Color iconcolor;
   final String imagePath;
   final void Function()? onTap;
 
@@ -17,6 +18,7 @@ class AppButton extends StatelessWidget {
       required this.minitext,
       required this.minitextcolor,
       required this.imagePath,
+      required this.iconcolor,
       required this.onTap});
 
   @override
@@ -35,6 +37,7 @@ class AppButton extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(
+              color: iconcolor,
               imagePath,
               filterQuality: FilterQuality.high,
             ),

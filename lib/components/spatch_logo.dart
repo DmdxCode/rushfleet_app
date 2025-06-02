@@ -6,18 +6,21 @@ class SpatchLogo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Padding(padding: EdgeInsets.symmetric(horizontal: 0)),
         Text(
-          "spatch",
+          "RushFleet",
           style: TextStyle(
-              color: Color(0xFF7000F6),
+              color: Color(0xFF12AA6C),
               fontWeight: FontWeight.w800,
-              fontSize: 25,
+              fontSize: 22,
               fontFamily: 'MazzardH-SemiBoldItalic.ttf'),
         ),
         Image.asset(
-          "lib/images/Vector.png",
+          "lib/images/result.png",
+          height: 45,
+          width: 50,
+          color: Colors.white,
         ),
       ],
     );

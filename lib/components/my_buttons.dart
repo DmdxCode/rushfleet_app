@@ -30,7 +30,7 @@ class MyButtons extends StatelessWidget {
           child: Text(
             text,
             style: TextStyle(
-              fontWeight: FontWeight.w800,
+              fontWeight: FontWeight.w700,
               color: fontcolor,
               fontSize: 15,
             ),

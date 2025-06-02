@@ -34,10 +34,21 @@ dependencies:
   firebase_auth: ^5.4.0
   cloud_firestore: ^5.6.0
   flutter_svg: ^2.0.9
+  intl: ^0.17.0
+  firebase_storage: ^12.4.4
+  image_picker: ^1.1.2
+  shared_preferences: ^2.5.2
+  intl_phone_field: ^3.2.0
+  flutter_dotenv: ^5.0.2
 
+  
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
+  
+  flutter_paystack: ^1.0.6
+  nominatim_flutter: ^0.0.6
+  http: ^0.13.5
 
 dev_dependencies:
   flutter_test:
@@ -65,6 +76,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
   - lib/images/
+  - .env
   - lib/svg/
 
   # An image asset can refer to one or more resolution-specific "variants", see

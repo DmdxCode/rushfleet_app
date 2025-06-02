@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:spatch_flutter/pages/express_request.dart';
+import 'package:spatch_flutter/pages/international_request_page.dart';
+import 'package:spatch_flutter/pages/interstate_request.dart';
 import 'package:spatch_flutter/pages/request_page.dart';
 
 class HomeTiles extends StatelessWidget {
@@ -24,7 +27,7 @@ class HomeTiles extends StatelessWidget {
                 width: 200,
                 height: 120,
                 decoration: BoxDecoration(
-                    color: Color(0XFF7000F6),
+                    color: Color(0xFF12AA6C),
                     borderRadius: BorderRadius.circular(15)),
                 child: Padding(
                   padding: const EdgeInsets.all(12),
@@ -36,8 +39,9 @@ class HomeTiles extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Image.asset(
-                            "lib/images/arrow.png",
-                            height: 25,
+                            color: const Color.fromARGB(255, 252, 18, 18),
+                            "lib/images/rf.png",
+                            height: 20,
                           ),
                         ],
                       ),
@@ -62,41 +66,52 @@ class HomeTiles extends StatelessWidget {
             SizedBox(
               width: 10,
             ),
-            Container(
-              width: 150,
-              height: 120,
-              decoration: BoxDecoration(
-                  color: Color(0XFF15B2E1),
-                  borderRadius: BorderRadius.circular(15)),
-              child: Padding(
-                padding: const EdgeInsets.all(12),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Image.asset(
-                          "lib/images/arrow.png",
-                          height: 25,
-                        ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Express",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w800,
+            GestureDetector(
+              onTap: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ExpressRequestPage(),
+                  ),
+                );
+              },
+              child: Container(
+                width: 150,
+                height: 120,
+                decoration: BoxDecoration(
+                    color: Color(0XFF82b512),
+                    borderRadius: BorderRadius.circular(15)),
+                child: Padding(
+                  padding: const EdgeInsets.all(12),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Image.asset(
+                            color: const Color.fromARGB(255, 252, 18, 18),
+                            "lib/images/rf.png",
+                            height: 20,
                           ),
-                        ),
-                      ],
-                    )
-                  ],
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Express",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w800,
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
                 ),
               ),
             )
@@ -108,82 +123,104 @@ class HomeTiles extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Container(
-              width: 150,
-              height: 120,
-              decoration: BoxDecoration(
-                  color: Color(0XFF02C963),
-                  borderRadius: BorderRadius.circular(15)),
-              child: Padding(
-                padding: const EdgeInsets.all(12),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Image.asset(
-                          "lib/images/arrow.png",
-                          height: 25,
-                        ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Interstate",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w800,
+            GestureDetector(
+              onTap: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => InterstateRequestPage(),
+                  ),
+                );
+              },
+              child: Container(
+                width: 150,
+                height: 120,
+                decoration: BoxDecoration(
+                    color: Color(0XFFddc511),
+                    borderRadius: BorderRadius.circular(15)),
+                child: Padding(
+                  padding: const EdgeInsets.all(12),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Image.asset(
+                            "lib/images/rf.png",
+                            color: const Color.fromARGB(255, 252, 18, 18),
+                            height: 20,
                           ),
-                        ),
-                      ],
-                    )
-                  ],
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Interstate",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w800,
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),
             SizedBox(
               width: 10,
             ),
-            Container(
-              width: 200,
-              height: 120,
-              decoration: BoxDecoration(
-                  color: Color(0XFFFFB947),
-                  borderRadius: BorderRadius.circular(15)),
-              child: Padding(
-                padding: const EdgeInsets.all(12),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Image.asset(
-                          "lib/images/arrow.png",
-                          height: 25,
-                        ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Express",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w800,
+            GestureDetector(
+              onTap: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => InternationalRequestPage(),
+                  ),
+                );
+              },
+              child: Container(
+                width: 200,
+                height: 120,
+                decoration: BoxDecoration(
+                    color: Color(0xFF061c22),
+                    borderRadius: BorderRadius.circular(15)),
+                child: Padding(
+                  padding: const EdgeInsets.all(12),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Image.asset(
+                            "lib/images/rf.png",
+                            color: const Color.fromARGB(255, 252, 18, 18),
+                            height: 20,
                           ),
-                        ),
-                      ],
-                    )
-                  ],
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            "International",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w800,
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
                 ),
               ),
             )

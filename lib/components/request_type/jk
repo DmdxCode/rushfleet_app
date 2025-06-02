@@ -1,0 +1,128 @@
+Future<bool> sendDataToFirestore() async {
+    showDialog(
+      context: context,
+      builder: (context) => const Center(
+          child: CircularProgressIndicator(color: Color(0xFF12AA6C))),
+    );
+
+    User? user = FirebaseAuth.instance.currentUser;
+
+    String generateOrderId() {
+      final random = Random();
+      String number = (100 + random.nextInt(900)).toString();
+      const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+      String chars =
+          List.generate(4, (_) => letters[random.nextInt(letters.length)])
+              .join();
+      return '#$number$chars';
+    }
+
+    String orderId = generateOrderId();
+
+    if (user == null) {
+      Navigator.pop(context);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("User Not Logged In!"),
+          backgroundColor: Color(0xFF12AA6C),
+        ),
+      );
+      return false;
+    }
+
+    if ([
+      pickUpController.text.trim(),
+      deliveryController.text.trim(),
+      contactNameController.text.trim(),
+      contactNumberController.text.trim(),
+      itemController.text.trim(),
+      _selectedVehicleName,
+      _selectedVehiclePrice,
+    ].any((e) => e.isEmpty)) {
+      Navigator.pop(context);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Please fill in all required fields."),
+          backgroundColor: Color.fromARGB(255, 236, 100, 100),
+        ),
+      );
+      return false;
+    }
+
+    try {
+      // Step 1: Calculate Distance between pickup and delivery
+      double distanceInKm = await calculateDistance(
+        pickUpController.text.trim(),
+        deliveryController.text.trim(),
+      );
+
+      // Step 2: Calculate total dispatch fee
+      double vehiclePricePerKm = double.tryParse(_selectedVehiclePrice) ?? 0;
+      double dispatchFee = distanceInKm * vehiclePricePerKm;
+
+      // Step 3: Get user's wallet balance
+      int walletBalance = await getWalletBalance(user.email!);
+
+      if (walletBalance < dispatchFee) {
+        Navigator.pop(context);
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text("Insufficient funds. Please top up your wallet."),
+            backgroundColor: Color.fromARGB(255, 236, 100, 100),
+          ),
+        );
+        return false;
+      }
+
+      // Step 4: Proceed to submit request
+      await FirebaseFirestore.instance.collection('dispatch_requests').add({
+        "customer_id": user.uid,
+        'status': 'Pending',
+        'payment_status': 'Pending',
+        'email': user.email,
+        'order_id': orderId,
+        'pick_up_address': pickUpController.text.trim(),
+        'delivery_address': deliveryController.text.trim(),
+        'contact_name': contactNameController.text.trim(),
+        'contact_number': contactNumberController.text.trim(),
+        'item_description': itemController.text.trim(),
+        'timestamp': FieldValue.serverTimestamp(),
+        'selected_vehicle': _selectedVehicleName,
+        'vehicle_price': _selectedVehiclePrice,
+        'dispatch_fee': dispatchFee.toStringAsFixed(2), // Save it!
+        'note': noteController.text.trim(),
+        'cash': cashController.text.trim(),
+      });
+
+      Navigator.pop(context);
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Dispatch request sent successfully!"),
+          backgroundColor: Color(0xFF12AA6C),
+        ),
+      );
+
+      // Clear controllers
+      pickUpController.clear();
+      deliveryController.clear();
+      contactNameController.clear();
+      contactNumberController.clear();
+      itemController.clear();
+      noteController.clear();
+      cashController.clear();
+      _selectedVehicleName = "";
+      _selectedVehiclePrice = "";
+
+      return true;
+    } catch (e) {
+      Navigator.pop(context);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Error sending data. Please try again."),
+          backgroundColor: Color.fromARGB(255, 236, 100, 100),
+        ),
+      );
+      return false;
+    }
+  }

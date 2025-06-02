@@ -6,7 +6,7 @@ import 'package:spatch_flutter/pages/intro_page.dart';
 import 'package:flutter/services.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({super.key});
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -45,7 +45,7 @@ class _HomePageState extends State<HomePage> {
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
-          foregroundColor: Color(0xFF7000F6),
+          foregroundColor: Color(0xFF061F16),
           systemOverlayStyle: SystemUiOverlayStyle(
             statusBarColor: Colors.black, // Change status bar color to black
             statusBarIconBrightness: Brightness.light, // White icons
@@ -58,6 +58,7 @@ class _HomePageState extends State<HomePage> {
           children: [
             Positioned.fill(
               child: Image.asset(
+                colorBlendMode: BlendMode.saturation,
                 "lib/images/background_image.png",
                 fit: BoxFit.cover,
               ),
