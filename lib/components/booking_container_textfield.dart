@@ -146,6 +146,7 @@ class _BookingContainerTextfieldState extends State<BookingContainerTextfield> {
                     ],
                   ),
                   CustomDropdownItem<Map<String, dynamic>>(
+                    onTap: () => handleSelection,
                     items: items,
                     itemBuilder: (item) => Container(
                       height: 100,
@@ -169,6 +170,7 @@ class _BookingContainerTextfieldState extends State<BookingContainerTextfield> {
             // 🔹 Display Selected Vehicle Image & Price
             if (selectedItem != null) ...[
               // Center(
+
               //   child: Container(
               //     decoration: BoxDecoration(
               //         border: Border.all(

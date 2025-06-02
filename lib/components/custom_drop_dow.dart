@@ -5,13 +5,15 @@ class CustomDropdownItem<T> extends StatefulWidget {
   final String hintText;
   final Widget Function(T) itemBuilder;
   final Function(T) onItemSelected;
+  void Function()? onTap;
 
-  const CustomDropdownItem({
+  CustomDropdownItem({
     Key? key,
     required this.items,
     required this.onItemSelected,
     required this.itemBuilder,
     this.hintText = "",
+    required this.onTap,
   }) : super(key: key);
 
   @override
